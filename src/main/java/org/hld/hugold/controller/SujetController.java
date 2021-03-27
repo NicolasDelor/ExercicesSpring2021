@@ -22,9 +22,9 @@ public class SujetController {
 	@Autowired
 	private SujetService service;
 
-	@PostMapping("/{name}")
-	public Sujet addSujet(@PathVariable("name") String name) {
-		return service.addSujet(name);
+	@PostMapping
+	public Sujet addSujet(@RequestBody Sujet sujet) {
+		return service.addSujet(sujet);
 	}
 
 	@DeleteMapping("/{id}")
