@@ -3,7 +3,7 @@ package org.hld.hugold.controller;
 import java.util.List;
 
 import org.hld.hugold.NotFoundException;
-import org.hld.hugold.entity.Sujet;
+import org.hld.hugold.dto.SujetDTO;
 import org.hld.hugold.service.SujetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +24,7 @@ public class SujetController {
 	private SujetService service;
 
 	@PostMapping
-	public Sujet addSujet(@RequestBody Sujet sujet) {
+	public SujetDTO addSujet(@RequestBody SujetDTO sujet) {
 		return service.addSujet(sujet);
 	}
 
@@ -32,18 +33,23 @@ public class SujetController {
 		return service.deleteSujet(id);
 	}
 
+	@GetMapping("/city")
+	public List<SujetDTO> getByCityEndWith(@RequestParam(name = "endWith") String endWidth) {
+		return service.getByCityEndWith(endWidth);
+	}
+
 	@GetMapping("/{id}")
-	public Sujet getSujet(@PathVariable("id") String id) throws NotFoundException {
+	public SujetDTO getSujet(@PathVariable("id") String id) throws NotFoundException {
 		return service.getSujet(id);
 	}
 
 	@GetMapping
-	public List<Sujet> getSujets() {
-		return service.getSujets();
+	public List<SujetDTO> getSujets(@RequestParam(name = "name", required = false) String name) {
+		return name == null ? service.getSujets() : service.findByName(name);
 	}
 
 	@PutMapping
-	public Sujet updateSujet(@RequestBody Sujet sujet) throws NotFoundException {
+	public SujetDTO updateSujet(@RequestBody SujetDTO sujet) throws NotFoundException {
 		return service.updateSujet(sujet);
 	}
 
