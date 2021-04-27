@@ -2,7 +2,6 @@ package org.hld.nicolasd.service;
 
 import org.hld.nicolasd.dao.UserDAO;
 import org.hld.nicolasd.dto.UserDTO;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,9 +16,6 @@ public class UserService {
     private static long currentId = 123;
 
     private final List<UserDAO> userDAOList = new ArrayList<>();
-
-    private final RestTemplate restTemplate = new RestTemplate();
-
 
     public UserService() {
         super();
