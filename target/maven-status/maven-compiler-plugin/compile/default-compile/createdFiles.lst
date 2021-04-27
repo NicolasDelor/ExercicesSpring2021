@@ -1,1 +1,7 @@
 org/hld/nicolasd/NicolasdApplication.class
+org/hld/nicolasd/dto/UserDTO.class
+org/hld/nicolasd/controller/UserController.class
+org/hld/nicolasd/UserRepository.class
+org/hld/nicolasd/dao/UserDAO.class
+org/hld/nicolasd/service/UserService.class
+org/hld/nicolasd/entity/User.class
