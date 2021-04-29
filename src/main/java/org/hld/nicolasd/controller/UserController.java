@@ -1,47 +1,56 @@
 package org.hld.nicolasd.controller;
 
-import com.fasterxml.jackson.annotation.OptBoolean;
-import javassist.NotFoundException;
-import org.hld.nicolasd.dto.UserDTO;
-import org.hld.nicolasd.service.UserService;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
+import org.hld.nicolasd.NotFoundException;
+import org.hld.nicolasd.dto.UserDTO;
+import org.hld.nicolasd.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
 
-    private final UserService userService;
+	@Autowired
+	private UserService service;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+	@PostMapping
+	public UserDTO addUser(@RequestBody UserDTO user) {
+		return service.addUser(user);
+	}
 
-    @GetMapping
-    public List<UserDTO> getAll() {
+	@DeleteMapping("/{id}")
+	public long deleteUser(@PathVariable("id") String id) {
+		return service.deleteUser(id);
+	}
 
-        return userService.getAll();
-    }
+	@GetMapping("/city")
+	public List<UserDTO> getByCityEndWith(@RequestParam(name = "endWith") String endWidth) {
+		return service.getByCityEndWith(endWidth);
+	}
 
-    @GetMapping("/{id}")
-    public UserDTO get(@PathVariable("id") String id) {
-        return userService.get(id);
-    }
+	@GetMapping("/{id}")
+	public UserDTO getUser(@PathVariable("id") String id) throws NotFoundException {
+		return service.getUser(id);
+	}
 
-    @PostMapping
-    public UserDTO create(@RequestBody UserDTO userDTO) {
-        return userService.create(userDTO);
-    }
+	@GetMapping
+	public List<UserDTO> getUsers(@RequestParam(name = "name", required = false) String name) {
+		return name == null ? service.getUsers() : service.findByName(name);
+	}
 
-    @PutMapping
-    public UserDTO update(@RequestBody UserDTO userDTO) {
-        return userService.update(userDTO);
-    }
+	@PutMapping
+	public UserDTO updateUser(@RequestBody UserDTO user) throws NotFoundException {
+		return service.updateUser(user);
+	}
 
-    @DeleteMapping("/{id}")
-    public long delete(@PathVariable("id") String id) {
-        return userService.delete(id);
-    }
 }

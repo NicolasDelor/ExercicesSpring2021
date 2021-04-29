@@ -1,14 +1,38 @@
 package org.hld.nicolasd.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@Entity(name = "User")
 public class User {
+	@Id
+	private String id = UUID.randomUUID().toString();
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String Name;
+	@Column(name = "name")
+	private String name;
 
+	@Column(name = "zipcode")
+	private String zipCode;
+
+	@Column(name = "city")
+	private String city;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Author author;
+
+	public User(String name, String zipCode, Author author) {
+		this.name = name;
+		this.zipCode = zipCode;
+		this.author = author;
+	}
 }

@@ -1,19 +1,18 @@
 package org.hld.nicolasd.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-@Getter
-@Setter
-public class UserDTO implements Serializable {
-
-    private Long id;
-    private String Name;
-
-    public UserDTO(Long id, String name) {
-        this.id = id;
-        Name = name;
-    }
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserDTO {
+	private String id;
+	private String name;
+	private String zipCode;
+	private String city;
+	private String authorName;
 }
